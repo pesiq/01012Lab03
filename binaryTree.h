@@ -4,18 +4,18 @@
 template<class T>
 class binaryTree {
 private:
-    typedef struct node {
+    struct Node {
         T value;
         int key{};
         int height = 1;
         Node* left;
         Node* right;
-    } Node;
+    };
     int size;
     Node* root;
 
 public:
-    BinaryTree(){
+    binaryTree(){
         root = nullptr;
         size = 0;
     }
@@ -30,19 +30,19 @@ public:
             return;
         }
         else {
-            add(temp);
+            addRecursion(temp, root);
         }
     }
 
-    void add(Node* node,Node* curr) {
+    void addRecursion(Node* node, Node* curr) {
         if (node == nullptr) {
             return;
         }
         if(node->key < curr->key && curr->left){
-            add(node, curr->left);
+            addRecursion(node, curr->left);
         }
-        if(node->key > curr->right && curr->right){
-            add(node, curr->right);
+        if(node->key > curr->key && curr->right){
+            addRecursion(node, curr->right);
         }
         if(curr->key > node->key){
             size++;
@@ -71,6 +71,20 @@ public:
         while(curr && curr->right != nullptr)
             curr = curr->right;
         return curr;
+    }
+
+    Node* findNode(Node* node, T value){
+        if(!node){
+            return nullptr;
+        }
+        if(value < node->value){
+            return findNode(node->left, value);
+        }
+        if(value > node->value){
+            return findNode(node->right, value);
+        } else {
+            return node;
+        }
     }
 
     Node* remove(Node* node, int key) {
@@ -180,6 +194,95 @@ public:
     }
 
 
+    std::string getKeyString(Node* node){
+        if(!node)
+            return std::string();
+
+        std::string result;
+        result += getKeyString(node->right);
+        result += node->key;
+        result += getKeyString(node->left);
+
+        return result;
+    }
+
+
+    std::string getValueString(Node* node){
+        if(!node)
+            return std::string();
+
+        std::string result;
+        result += getValueString(node->right);
+        result += node->value;
+        result += getValueString(node->left);
+
+        return result;
+    }
+
+    void mapRecursion(Node* node, T(*fun)(T)){
+        if(!node)
+            return;
+        forMap(node->left, fun);
+        forMap(node->right, fun);
+        node->value = fun(node->value);
+    }
+
+    void whereRecursion(bool (*fun)(T),Node* node ,binaryTree<T> &output){
+        if(!node){
+            return;
+        }
+        if(fun(node->value)){
+            output.add(node->key, node->value);
+        }
+        whereRecursion(fun, node->left, output);
+        whereRecursion(fun, node->right, output);
+    }
+
+    binaryTree<T> &map(T (*fun)(T)){
+        auto *result = new binaryTree<T>(this);
+        mapRecursion(result->root, fun);
+        return *result;
+    }
+
+    binaryTree<T> &where(bool (*fun)(T)){
+        auto *result = new binaryTree<T>();
+        whereRecursion(fun, root, *result);
+        return *result;
+    }
+
+    bool includesSubtreeRecursion(Node* node, Node* toFind){
+        if(!toFind)
+            return true;
+        if(!node)
+            return true;
+        if(node->key != toFind->key)
+            return false;
+        bool rec = includesSubtreeRecursion(node->right, toFind->right) && includesSubtreeRecursion(node->left, toFind->left);
+        return rec;
+    }
+
+    bool includesSubtree(binaryTree<T> &candidate){
+        if(!candidate.root){
+            return true;
+        }
+        auto *node = findNode(root, candidate.root->key);
+        return includesSubtreeRecursion(node, candidate.root);
+    }
+
+    void subtreeRecursion(Node* node){
+        if(!node)
+            return;
+        this->add(node->key, node->value);
+        subtreeRecursion(node->left);
+        subtreeRecursion(node->right);
+    }
+
+
+    binaryTree<T> &getSubtree(Node* nRoot){
+        auto *result = new binaryTree<T>;
+        result->subtreeRecursion(nRoot->key, nRoot->value);
+        return *result;
+    }
 
 
 };
