@@ -149,13 +149,15 @@ public:
     }
 
     dynamicArray<T> &operator=(const dynamicArray<T> &array) {
-        bufferSize = array.bufferSize;
-        items = new T[bufferSize];
-        size = array.size;
         if (array.items == nullptr) {
             items = nullptr;
             return *this;
         }
+        delete[] items;
+        bufferSize = array.bufferSize;
+        items = new T[bufferSize];
+        size = array.size;
+
         for (int i = 0; i < array.size; i++) {
             items[i] = array.items[i];
         }

@@ -13,8 +13,9 @@ private:
     };
     int size;
     Node* root;
-
 public:
+
+
     binaryTree(){
         root = nullptr;
         size = 0;
@@ -23,9 +24,11 @@ public:
     void deleteFamily(Node* node){
         if(nullptr == node)
             return;
-        deleteFamily(node->left);
-        deleteFamily(node->right);
-        delete node;
+        {
+            deleteFamily(node->left);
+            deleteFamily(node->right);
+            delete node;
+        }
     }
 
     ~binaryTree(){
@@ -49,13 +52,13 @@ public:
     void addRecursion(Node* node, Node* curr) {
         if (node == nullptr) {
             return;
-        }
+        }else
         if(node->key < curr->key && curr->left){
             addRecursion(node, curr->left);
-        }
+        } else
         if(node->key > curr->key && curr->right){
             addRecursion(node, curr->right);
-        }
+        } else
         if(curr->key > node->key){
             size++;
             curr->left = node;
@@ -118,7 +121,7 @@ public:
         } else if (key > node->key) {
             node->right = remove(node->right, key);
             return node;
-        }
+        }else
 
         if (node->left == nullptr) {
             Node *tmp = node->right;
@@ -215,13 +218,21 @@ public:
     }
 
 
+    Node* getRoot(){
+        return root;
+    }
+
+    T getValue(Node* node){
+        return node->value;
+    }
+
     std::string getKeyString(Node* node){
         if(!node)
             return std::string();
 
         std::string result;
         result += getKeyString(node->right);
-        result += node->key;
+        result += std::to_string(node->key);
         result += getKeyString(node->left);
 
         return result;
@@ -234,7 +245,7 @@ public:
 
         std::string result;
         result += getValueString(node->right);
-        result += node->value;
+        result += std::to_string(node->value);
         result += getValueString(node->left);
 
         return result;
@@ -243,8 +254,8 @@ public:
     void mapRecursion(Node* node, T(*fun)(T)){
         if(!node)
             return;
-        forMap(node->left, fun);
-        forMap(node->right, fun);
+        mapRecursion(node->left, fun);
+        mapRecursion(node->right, fun);
         node->value = fun(node->value);
     }
 
@@ -260,7 +271,7 @@ public:
     }
 
     binaryTree<T> &map(T (*fun)(T)){
-        auto *result = new binaryTree<T>(this);
+        auto *result = new binaryTree<T>();
         mapRecursion(result->root, fun);
         return *result;
     }

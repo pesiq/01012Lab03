@@ -24,6 +24,8 @@ public:
         heap = dynamicArray<T>(heap1.heap);
     }
 
+    ~binaryHeap() = default;
+
     int findIndex(T value){
         for(int i = 0; i < heap.length(); i++){
             if(heap[i] == value)
@@ -89,10 +91,32 @@ public:
         return *result;
     }
 
+    std::string getStr(int index, int level){
+        if(index >= heap.length())
+            return std::string();
+
+        std::string result;
+        result += getStr(index * 2 + 2, ++level);
+        result += std::to_string(heap[index]);
+        result += getStr(index * 2 + 1, ++level);
+
+        return result;
+    }
+
 
     binaryHeap<T> &operator=(binaryHeap<T> const &heap1){
         heap = heap1;
         return *this;
+    }
+
+    bool operator==(binaryHeap<T> const &heap1){
+        if(heap.length() != heap1.heap.length())
+            return false;
+        for (int i = 0; i < heap.length(); i++) {
+            if(heap[i] != heap1.heap[i])
+                return false;
+        }
+        return true;
     }
 
 };
