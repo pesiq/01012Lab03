@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/mnt/c/Projects/MIFIGovnocode/S1E2/Lab03/binaryHeap.h
+dynamicArray.h
+/mnt/c/Projects/MIFIGovnocode/S1E2/Lab03/dynamicArray.h
+
+/mnt/c/Projects/MIFIGovnocode/S1E2/Lab03/binaryTree.h
+
+/mnt/c/Projects/MIFIGovnocode/S1E2/Lab03/dynamicArray.h
+exceptions.h
+/mnt/c/Projects/MIFIGovnocode/S1E2/Lab03/exceptions.h
+
+/mnt/c/Projects/MIFIGovnocode/S1E2/Lab03/exceptions.h
+exception
+-
+cstdlib
+-
+string
+-
+
+/mnt/c/Projects/MIFIGovnocode/S1E2/Lab03/tests.cpp
+binaryHeap.h
+/mnt/c/Projects/MIFIGovnocode/S1E2/Lab03/binaryHeap.h
+binaryTree.h
+/mnt/c/Projects/MIFIGovnocode/S1E2/Lab03/binaryTree.h
+iostream
+-
+

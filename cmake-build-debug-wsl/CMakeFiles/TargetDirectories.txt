@@ -1,0 +1,4 @@
+/mnt/c/Projects/MIFIGovnocode/S1E2/Lab03/cmake-build-debug-wsl/CMakeFiles/rebuild_cache.dir
+/mnt/c/Projects/MIFIGovnocode/S1E2/Lab03/cmake-build-debug-wsl/CMakeFiles/edit_cache.dir
+/mnt/c/Projects/MIFIGovnocode/S1E2/Lab03/cmake-build-debug-wsl/CMakeFiles/tests.dir
+/mnt/c/Projects/MIFIGovnocode/S1E2/Lab03/cmake-build-debug-wsl/CMakeFiles/Lab03.dir

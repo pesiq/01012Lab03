@@ -20,6 +20,18 @@ public:
         size = 0;
     }
 
+    void deleteFamily(Node* node){
+        if(nullptr == node)
+            return;
+        deleteFamily(node->left);
+        deleteFamily(node->right);
+        delete node;
+    }
+
+    ~binaryTree(){
+        deleteFamily(root);
+    }
+
     void add(int key, T value) {
         auto* temp = new Node;
         temp->key = key;
@@ -85,6 +97,15 @@ public:
         } else {
             return node;
         }
+    }
+
+    bool has(int value){
+        Node* node = findNode(root, value);
+        return !node ? false : node->value == value;
+    }
+
+    void remove(int key){
+        remove(root, key);
     }
 
     Node* remove(Node* node, int key) {
